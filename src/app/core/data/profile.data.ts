@@ -43,7 +43,7 @@ export const PROFILE: Profile = {
     {
       id: 'linkedin',
       label: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/wassim-taghelit/',
+      url: 'https://www.linkedin.com/in/wassim-ali-taghelit-749286238/',
       icon: 'linkedin',
     },
     {
