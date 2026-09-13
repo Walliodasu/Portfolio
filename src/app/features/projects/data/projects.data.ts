@@ -4,7 +4,8 @@ import { Project } from '../../../core/models/project.model';
  * Real projects, sourced from Wassim's own GitHub repositories (github.com/Walliodasu)
  * plus two team repositories he contributed to (github.com/RayanMokhtar) — for the latter,
  * the description and outcomes are scoped to his actual, verified contribution (commit history).
- * Cover images are category placeholders until real screenshots are provided.
+ * Cover images are custom illustrations themed per project (public/images/projects/covers/)
+ * until real screenshots are provided.
  * Source-code links are only added for public repositories — the others stay private.
  */
 export const PROJECTS: readonly Project[] = [
@@ -47,7 +48,7 @@ export const PROJECTS: readonly Project[] = [
       github: 'https://github.com/RayanMokhtar/VisionAssist',
     },
     image: {
-      src: '/images/projects/placeholder-ai.svg',
+      src: '/images/projects/covers/visionassist.svg',
       alt: {
         fr: 'Illustration du projet VisionAssist',
         en: 'Illustration of the VisionAssist project',
@@ -95,7 +96,7 @@ export const PROJECTS: readonly Project[] = [
       github: 'https://github.com/RayanMokhtar/Segmentation_images_satellites_Neural_networks',
     },
     image: {
-      src: '/images/projects/placeholder-ai.svg',
+      src: '/images/projects/covers/floodai.svg',
       alt: {
         fr: 'Illustration du projet FloodAI',
         en: 'Illustration of the FloodAI project',
@@ -141,7 +142,7 @@ export const PROJECTS: readonly Project[] = [
     featured: true,
     links: {},
     image: {
-      src: '/images/projects/placeholder-data.svg',
+      src: '/images/projects/covers/us-accidents.svg',
       alt: {
         fr: 'Illustration du projet US Accidents Data Mining',
         en: 'Illustration of the US Accidents Data Mining project',
@@ -187,7 +188,7 @@ export const PROJECTS: readonly Project[] = [
     featured: true,
     links: {},
     image: {
-      src: '/images/projects/placeholder-ai.svg',
+      src: '/images/projects/covers/cnr-validation.svg',
       alt: {
         fr: 'Illustration du projet de validation de vie à distance CNR',
         en: 'Illustration of the CNR remote proof-of-life project',
@@ -235,7 +236,7 @@ export const PROJECTS: readonly Project[] = [
       github: 'https://github.com/Walliodasu/Portfolio',
     },
     image: {
-      src: '/images/projects/placeholder-web.svg',
+      src: '/images/projects/covers/portfolio.svg',
       alt: {
         fr: 'Illustration du portfolio personnel',
         en: 'Illustration of the personal portfolio',
@@ -283,7 +284,7 @@ export const PROJECTS: readonly Project[] = [
       demo: 'https://museevasion.alwaysdata.net/',
     },
     image: {
-      src: '/images/projects/placeholder-web.svg',
+      src: '/images/projects/covers/museevasion.svg',
       alt: {
         fr: 'Illustration du projet MuséeEvasion',
         en: 'Illustration of the MuséeEvasion project',

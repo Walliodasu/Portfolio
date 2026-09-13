@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="VisionAssist">
+  <defs>
+    <linearGradient id="g-visionassist" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f6bff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <pattern id="p-visionassist" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#080b12"/>
+  <rect width="1200" height="675" fill="url(#g-visionassist)" opacity="0.85"/>
+  <rect width="1200" height="675" fill="url(#p-visionassist)"/>
+  <circle cx="960" cy="150" r="220" fill="#ffffff" opacity="0.08"/>
+  <circle cx="220" cy="560" r="160" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Eye / real-time vision scan motif -->
+  <g transform="translate(900,330)" opacity="0.95">
+    <path d="M-220 0 C-140 -110 140 -110 220 0 C140 110 -140 110 -220 0 Z" fill="none" stroke="#ffffff" stroke-width="6" stroke-opacity="0.55"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#ffffff" stroke-width="6" stroke-opacity="0.85"/>
+    <circle cx="0" cy="0" r="26" fill="#ffffff" opacity="0.9"/>
+    <g stroke="#ffffff" stroke-width="4" stroke-opacity="0.5">
+      <line x1="-260" y1="-40" x2="-330" y2="-70"/>
+      <line x1="-260" y1="40" x2="-330" y2="70"/>
+      <line x1="260" y1="-40" x2="330" y2="-70"/>
+      <line x1="260" y1="40" x2="330" y2="70"/>
+    </g>
+    <g stroke="#ffffff" stroke-width="3" stroke-opacity="0.4">
+      <rect x="-300" y="-150" width="40" height="40" fill="none"/>
+      <rect x="260" y="-150" width="40" height="40" fill="none"/>
+      <rect x="-300" y="110" width="40" height="40" fill="none"/>
+      <rect x="260" y="110" width="40" height="40" fill="none"/>
+    </g>
+  </g>
+
+  <text x="80" y="330" font-family="ui-monospace, SFMono-Regular, monospace" font-size="52" font-weight="600" fill="#ffffff" opacity="0.95">VisionAssist</text>
+  <text x="80" y="380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" fill="#ffffff" opacity="0.75">Assistant vocal &amp; vision temps réel</text>
+</svg>

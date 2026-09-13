@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="US Accidents — Data Mining">
+  <defs>
+    <linearGradient id="g-us-accidents" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#2f6bff"/>
+    </linearGradient>
+    <pattern id="p-us-accidents" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#080b12"/>
+  <rect width="1200" height="675" fill="url(#g-us-accidents)" opacity="0.85"/>
+  <rect width="1200" height="675" fill="url(#p-us-accidents)"/>
+  <circle cx="960" cy="150" r="220" fill="#ffffff" opacity="0.08"/>
+  <circle cx="220" cy="560" r="160" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Cluster / association-rule scatter motif -->
+  <g transform="translate(900,320)" opacity="0.9">
+    <g stroke="#ffffff" stroke-width="2" stroke-opacity="0.35">
+      <line x1="-90" y1="-60" x2="-40" y2="-90"/>
+      <line x1="-90" y1="-60" x2="-30" y2="-20"/>
+      <line x1="-40" y1="-90" x2="-30" y2="-20"/>
+      <line x1="120" y1="30" x2="180" y2="-20"/>
+      <line x1="120" y1="30" x2="150" y2="90"/>
+      <line x1="180" y1="-20" x2="150" y2="90"/>
+      <line x1="180" y1="-20" x2="230" y2="40"/>
+    </g>
+    <g fill="#ffffff">
+      <circle cx="-90" cy="-60" r="10" opacity="0.85"/>
+      <circle cx="-40" cy="-90" r="7" opacity="0.6"/>
+      <circle cx="-30" cy="-20" r="9" opacity="0.75"/>
+      <circle cx="-140" cy="10" r="6" opacity="0.5"/>
+      <circle cx="120" cy="30" r="12" opacity="0.9"/>
+      <circle cx="180" cy="-20" r="8" opacity="0.65"/>
+      <circle cx="150" cy="90" r="9" opacity="0.7"/>
+      <circle cx="230" cy="40" r="7" opacity="0.55"/>
+      <circle cx="20" cy="-120" r="6" opacity="0.4"/>
+      <circle cx="-200" cy="-100" r="6" opacity="0.4"/>
+      <circle cx="60" cy="140" r="6" opacity="0.4"/>
+    </g>
+  </g>
+
+  <text x="80" y="300" font-family="ui-monospace, SFMono-Regular, monospace" font-size="44" font-weight="600" fill="#ffffff" opacity="0.95">US Accidents</text>
+  <text x="80" y="345" font-family="ui-monospace, SFMono-Regular, monospace" font-size="44" font-weight="600" fill="#ffffff" opacity="0.95">Data Mining</text>
+  <text x="80" y="390" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" fill="#ffffff" opacity="0.75">Clustering &amp; règles d'association</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="FloodAI">
+  <defs>
+    <linearGradient id="g-floodai" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <pattern id="p-floodai" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#080b12"/>
+  <rect width="1200" height="675" fill="url(#g-floodai)" opacity="0.85"/>
+  <rect width="1200" height="675" fill="url(#p-floodai)"/>
+  <circle cx="960" cy="150" r="220" fill="#ffffff" opacity="0.08"/>
+  <circle cx="220" cy="560" r="160" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Satellite scanning flooded terrain motif -->
+  <g transform="translate(900,260)" opacity="0.95" stroke="#ffffff">
+    <g transform="rotate(-25)">
+      <rect x="-30" y="-14" width="60" height="28" rx="4" fill="none" stroke-width="5" stroke-opacity="0.8"/>
+      <rect x="-95" y="-6" width="50" height="12" fill="none" stroke-width="4" stroke-opacity="0.6"/>
+      <rect x="45" y="-6" width="50" height="12" fill="none" stroke-width="4" stroke-opacity="0.6"/>
+      <line x1="0" y1="14" x2="0" y2="60" stroke-width="4" stroke-opacity="0.6"/>
+    </g>
+    <line x1="0" y1="60" x2="-60" y2="230" stroke-width="3" stroke-dasharray="6 10" stroke-opacity="0.45"/>
+    <line x1="0" y1="60" x2="60" y2="230" stroke-width="3" stroke-dasharray="6 10" stroke-opacity="0.45"/>
+  </g>
+  <g transform="translate(840,470)" fill="none" stroke="#ffffff" stroke-width="5">
+    <path d="M-260 20 Q-230 -10 -200 20 T-140 20 T-80 20 T-20 20 T40 20 T100 20 T160 20 T220 20" stroke-opacity="0.55"/>
+    <path d="M-260 55 Q-230 25 -200 55 T-140 55 T-80 55 T-20 55 T40 55 T100 55 T160 55 T220 55" stroke-opacity="0.35"/>
+  </g>
+
+  <text x="80" y="300" font-family="ui-monospace, SFMono-Regular, monospace" font-size="46" font-weight="600" fill="#ffffff" opacity="0.95">FloodAI</text>
+  <text x="80" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" fill="#ffffff" opacity="0.75">Segmentation satellite &amp; prédiction</text>
+</svg>
