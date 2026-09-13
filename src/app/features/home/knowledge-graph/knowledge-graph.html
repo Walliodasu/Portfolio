@@ -1,0 +1,159 @@
+<ng-template #svgTpl let-graph="graph">
+  <svg
+    [attr.viewBox]="'0 0 ' + graph.width + ' ' + graph.height"
+    class="h-auto w-full"
+    style="min-width: 640px"
+    role="img"
+    [attr.aria-label]="i18n.t().home.graphAriaLabel"
+  >
+    <g>
+      @for (edge of graph.edges; track edge.source + edge.target) {
+        @let source = nodeIndex().get(edge.source);
+        @let target = nodeIndex().get(edge.target);
+        @if (source && target) {
+          <line
+            [attr.x1]="source.x"
+            [attr.y1]="source.y"
+            [attr.x2]="target.x"
+            [attr.y2]="target.y"
+            class="stroke-border-subtle transition-opacity duration-200"
+            stroke-width="1"
+            [attr.opacity]="isActive(edge.source) && isActive(edge.target) ? 0.6 : 0.08"
+          />
+        }
+      }
+    </g>
+
+    <g>
+      @for (node of graph.nodes; track node.id) {
+        <g
+          class="cursor-default transition-opacity duration-200"
+          [class.cursor-pointer]="!!node.href"
+          [attr.opacity]="isActive(node.id) ? 1 : 0.25"
+          [attr.tabindex]="node.href ? 0 : null"
+          [attr.role]="node.href ? 'button' : null"
+          [attr.aria-label]="node.href ? node.tooltip : null"
+          (pointerenter)="hoveredId.set(node.id)"
+          (pointerleave)="hoveredId.set(null)"
+          (focus)="hoveredId.set(node.id)"
+          (blur)="hoveredId.set(null)"
+          (click)="onNodeActivate(node)"
+          (keydown.enter)="onNodeActivate(node)"
+          (keydown.space)="onNodeActivate(node)"
+        >
+          <title>{{ node.tooltip }}</title>
+          <circle
+            [attr.cx]="node.x"
+            [attr.cy]="node.y"
+            [attr.r]="node.kind === 'skill' ? 5 : 11"
+            [class]="
+              node.kind === 'experience'
+                ? 'fill-accent-500'
+                : node.kind === 'project'
+                  ? 'fill-highlight'
+                  : 'fill-surface-raised stroke-border-subtle'
+            "
+            [attr.stroke-width]="node.kind === 'skill' ? 1.5 : 0"
+          />
+          <text
+            [attr.x]="node.labelX"
+            [attr.y]="node.labelY"
+            [attr.text-anchor]="node.labelAnchor"
+            [attr.font-size]="node.kind === 'skill' ? 11 : 13"
+            [class]="
+              node.kind === 'skill'
+                ? 'fill-content-muted font-mono'
+                : 'fill-content font-mono font-semibold'
+            "
+          >
+            {{ node.label }}
+          </text>
+          @if (node.roleLabel) {
+            <text
+              [attr.x]="node.labelX"
+              [attr.y]="node.roleLabelY"
+              [attr.text-anchor]="node.labelAnchor"
+              font-size="10"
+              class="fill-content-muted font-mono"
+            >
+              {{ node.roleLabel }}
+            </text>
+          }
+        </g>
+      }
+    </g>
+  </svg>
+</ng-template>
+
+@if (!expanded()) {
+  <div class="rounded-card border border-border-subtle bg-surface-raised p-5 sm:p-7">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div class="flex flex-wrap items-center gap-4 text-xs text-content-muted">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="size-2.5 rounded-full bg-accent-500"></span>
+          {{ i18n.t().home.graphLegendExperience }}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="size-2.5 rounded-full bg-highlight"></span>
+          {{ i18n.t().home.graphLegendProject }}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="size-2 rounded-full border border-border-subtle bg-surface-raised"></span>
+          {{ i18n.t().home.graphLegendSkill }}
+        </span>
+      </div>
+
+      <button
+        type="button"
+        class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border-subtle bg-surface px-3 py-1.5 text-xs font-medium text-content transition-colors duration-200 hover:border-accent-500/50"
+        (click)="open()"
+      >
+        <pf-icon name="maximize" [size]="14" />
+        {{ i18n.t().home.graphExpand }}
+      </button>
+    </div>
+
+    <div class="mt-5 overflow-x-auto">
+      <ng-container
+        [ngTemplateOutlet]="svgTpl"
+        [ngTemplateOutletContext]="{ graph: activeGraph() }"
+      />
+    </div>
+
+    <p class="mt-4 text-center text-xs text-content-faint">{{ i18n.t().home.graphHint }}</p>
+  </div>
+} @else {
+  <div
+    class="fixed inset-0 z-50 flex flex-col bg-surface/95 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="i18n.t().home.graphExpandedTitle"
+  >
+    <div class="mx-auto flex h-full w-full max-w-6xl flex-col p-4 sm:p-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-semibold text-content">{{ i18n.t().home.graphExpandedTitle }}</h2>
+          <p class="mt-1 text-sm text-content-muted">{{ i18n.t().home.graphHint }}</p>
+        </div>
+
+        <button
+          type="button"
+          class="grid size-9 shrink-0 place-items-center rounded-lg border border-border-subtle bg-surface-raised text-content-muted transition-colors duration-200 hover:text-content"
+          [attr.aria-label]="i18n.t().common.close"
+          (click)="close()"
+        >
+          <pf-icon name="close" [size]="18" />
+        </button>
+      </div>
+
+      <div
+        class="mt-6 flex-1 overflow-auto rounded-card border border-border-subtle bg-surface-raised p-5"
+      >
+        <ng-container
+          [ngTemplateOutlet]="svgTpl"
+          [ngTemplateOutletContext]="{ graph: activeGraph() }"
+        />
+      </div>
+    </div>
+  </div>
+}

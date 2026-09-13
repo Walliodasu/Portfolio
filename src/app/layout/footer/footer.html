@@ -1,0 +1,62 @@
+<footer class="border-t border-border-subtle bg-surface-raised/40">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <p class="font-mono text-sm font-semibold text-content">{{ profile.fullName }}</p>
+        <p class="mt-2 max-w-sm text-sm leading-relaxed text-content-muted">
+          {{ i18n.t().footer.tagline }}
+        </p>
+        <p class="mt-4 inline-flex items-center gap-2 text-xs text-content-faint">
+          <span class="size-2 animate-pulse rounded-full bg-emerald-500"></span>
+          {{ i18n.translate(profile.availability) }}
+        </p>
+      </div>
+
+      <nav [attr.aria-label]="i18n.t().footer.navTitle">
+        <p class="text-xs font-semibold tracking-[0.15em] text-content uppercase">
+          {{ i18n.t().footer.navTitle }}
+        </p>
+        <ul class="mt-4 flex flex-col gap-2.5">
+          @for (item of navItems(); track item.path) {
+            <li>
+              <a
+                [routerLink]="item.path"
+                class="text-sm text-content-muted transition-colors duration-200 hover:text-accent-500"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <p class="text-xs font-semibold tracking-[0.15em] text-content uppercase">
+          {{ i18n.t().footer.socialTitle }}
+        </p>
+        <ul class="mt-4 flex flex-col gap-2.5">
+          @for (social of profile.socials; track social.id) {
+            <li>
+              <a
+                [href]="social.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-sm text-content-muted transition-colors duration-200 hover:text-accent-500"
+              >
+                <pf-icon [name]="social.icon" [size]="16" />
+                {{ social.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-border-subtle pt-6 text-xs text-content-faint sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {{ currentYear }} {{ profile.fullName }}. {{ i18n.t().footer.rights }}</p>
+      <p>{{ i18n.t().footer.builtWith }}</p>
+    </div>
+  </div>
+</footer>

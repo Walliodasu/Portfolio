@@ -1,0 +1,118 @@
+@if (project(); as item) {
+  <article class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <a
+      routerLink="/projects"
+      class="inline-flex items-center gap-2 text-sm font-medium text-content-muted transition-colors duration-200 hover:text-accent-500"
+    >
+      <pf-icon name="arrow-left" [size]="16" />
+      {{ i18n.t().common.backToProjects }}
+    </a>
+
+    <header class="mt-8">
+      <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-content-faint">
+        <span class="rounded-full bg-accent-500/10 px-2.5 py-1 text-accent-500">
+          {{ i18n.t().projects.categories[item.category] }}
+        </span>
+        <span>{{ item.year }}</span>
+      </div>
+
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-content text-balance sm:text-4xl">
+        {{ item.title }}
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-content-muted">
+        {{ i18n.translate(item.tagline) }}
+      </p>
+    </header>
+
+    <img
+      [ngSrc]="item.image.src"
+      [width]="item.image.width"
+      [height]="item.image.height"
+      [alt]="i18n.translate(item.image.alt)"
+      priority
+      class="mt-10 w-full rounded-card border border-border-subtle object-cover"
+    />
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <h2 class="text-xl font-semibold text-content">{{ i18n.t().projects.overview }}</h2>
+        <div class="mt-4 flex flex-col gap-4">
+          @for (paragraph of i18n.translate(item.description); track paragraph) {
+            <p class="text-base leading-relaxed text-content-muted">{{ paragraph }}</p>
+          }
+        </div>
+
+        <h2 class="mt-10 text-xl font-semibold text-content">{{ i18n.t().projects.outcomes }}</h2>
+        <ul class="mt-4 flex flex-col gap-3">
+          @for (outcome of i18n.translate(item.outcomes); track outcome) {
+            <li class="flex items-start gap-3 text-base leading-relaxed text-content-muted">
+              <span class="mt-1 text-accent-500"><pf-icon name="check" [size]="16" /></span>
+              {{ outcome }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <aside class="flex flex-col gap-6">
+        <div class="rounded-card border border-border-subtle bg-surface-raised p-6">
+          <h2 class="text-[11px] font-semibold tracking-[0.15em] text-content-faint uppercase">
+            {{ i18n.t().projects.stackLabel }}
+          </h2>
+          <ul class="mt-4 flex flex-wrap gap-1.5">
+            @for (tech of item.stack; track tech) {
+              <li><pf-tech-badge [label]="tech" /></li>
+            }
+          </ul>
+        </div>
+
+        @if (item.links.github || item.links.demo || item.links.article) {
+          <div class="flex flex-col gap-2.5">
+            @if (item.links.github) {
+              <a
+                [href]="item.links.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm font-semibold text-content transition-colors duration-200 hover:border-accent-500/50"
+              >
+                <pf-icon name="github" [size]="16" />
+                {{ i18n.t().projects.sourceCode }}
+              </a>
+            }
+            @if (item.links.demo) {
+              <a
+                [href]="item.links.demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 rounded-lg bg-accent-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-accent-600"
+              >
+                <pf-icon name="external" [size]="16" />
+                {{ i18n.t().projects.liveDemo }}
+              </a>
+            }
+            @if (item.links.article) {
+              <a
+                [href]="item.links.article"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm font-semibold text-content transition-colors duration-200 hover:border-accent-500/50"
+              >
+                {{ i18n.t().projects.readArticle }}
+              </a>
+            }
+          </div>
+        }
+      </aside>
+    </div>
+  </article>
+} @else {
+  <section class="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 lg:px-8">
+    <p class="text-base text-content-muted">{{ i18n.t().projects.notFound }}</p>
+    <a
+      routerLink="/projects"
+      class="mt-6 inline-flex items-center gap-2 rounded-lg bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-accent-600"
+    >
+      <pf-icon name="arrow-left" [size]="16" />
+      {{ i18n.t().common.backToProjects }}
+    </a>
+  </section>
+}

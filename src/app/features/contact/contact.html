@@ -1,0 +1,155 @@
+<section class="relative overflow-hidden">
+  <pf-page-glow />
+
+  <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <pf-section-heading
+      [eyebrow]="i18n.t().nav.contact"
+      [title]="i18n.t().contact.title"
+      [subtitle]="i18n.t().contact.subtitle"
+    />
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-5">
+      <div class="lg:col-span-3">
+        <h2 class="text-xl font-semibold text-content">{{ i18n.t().contact.formTitle }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="mt-6 flex flex-col gap-5" novalidate>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="name" class="text-sm font-medium text-content">
+                {{ i18n.t().contact.name }}
+              </label>
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                autocomplete="name"
+                [placeholder]="i18n.t().contact.namePlaceholder"
+                class="rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm text-content transition-colors duration-200 outline-none placeholder:text-content-faint focus:border-accent-500"
+                [attr.aria-invalid]="!!errorMessage(form.controls.name)"
+                [attr.aria-describedby]="errorMessage(form.controls.name) ? 'name-error' : null"
+              />
+              @if (errorMessage(form.controls.name); as error) {
+                <p id="name-error" class="text-xs text-red-500">{{ error }}</p>
+              }
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="email" class="text-sm font-medium text-content">
+                {{ i18n.t().contact.email }}
+              </label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                autocomplete="email"
+                [placeholder]="i18n.t().contact.emailPlaceholder"
+                class="rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm text-content transition-colors duration-200 outline-none placeholder:text-content-faint focus:border-accent-500"
+                [attr.aria-invalid]="!!errorMessage(form.controls.email)"
+                [attr.aria-describedby]="errorMessage(form.controls.email) ? 'email-error' : null"
+              />
+              @if (errorMessage(form.controls.email); as error) {
+                <p id="email-error" class="text-xs text-red-500">{{ error }}</p>
+              }
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="subject" class="text-sm font-medium text-content">
+              {{ i18n.t().contact.subject }}
+            </label>
+            <input
+              id="subject"
+              type="text"
+              formControlName="subject"
+              [placeholder]="i18n.t().contact.subjectPlaceholder"
+              class="rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm text-content transition-colors duration-200 outline-none placeholder:text-content-faint focus:border-accent-500"
+              [attr.aria-invalid]="!!errorMessage(form.controls.subject)"
+              [attr.aria-describedby]="errorMessage(form.controls.subject) ? 'subject-error' : null"
+            />
+            @if (errorMessage(form.controls.subject); as error) {
+              <p id="subject-error" class="text-xs text-red-500">{{ error }}</p>
+            }
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="message" class="text-sm font-medium text-content">
+              {{ i18n.t().contact.message }}
+            </label>
+            <textarea
+              id="message"
+              rows="6"
+              formControlName="message"
+              [placeholder]="i18n.t().contact.messagePlaceholder"
+              class="resize-y rounded-lg border border-border-subtle bg-surface-raised px-4 py-2.5 text-sm text-content transition-colors duration-200 outline-none placeholder:text-content-faint focus:border-accent-500"
+              [attr.aria-invalid]="!!errorMessage(form.controls.message)"
+              [attr.aria-describedby]="errorMessage(form.controls.message) ? 'message-error' : null"
+            ></textarea>
+            @if (errorMessage(form.controls.message); as error) {
+              <p id="message-error" class="text-xs text-red-500">{{ error }}</p>
+            }
+          </div>
+
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-accent-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-60"
+            [disabled]="status() === 'sending'"
+          >
+            <pf-icon name="send" [size]="16" />
+            {{ status() === 'sending' ? i18n.t().contact.sending : i18n.t().contact.submit }}
+          </button>
+
+          <div aria-live="polite" class="min-h-6">
+            @if (status() === 'success') {
+              <p
+                class="inline-flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400"
+              >
+                <pf-icon name="check" [size]="16" />
+                {{ i18n.t().contact.success }}
+              </p>
+            } @else if (status() === 'error') {
+              <p class="inline-flex items-center gap-2 text-sm text-red-500">
+                <pf-icon name="alert" [size]="16" />
+                {{ i18n.t().contact.error }}
+              </p>
+            }
+          </div>
+        </form>
+      </div>
+
+      <aside class="lg:col-span-2">
+        <h2 class="text-xl font-semibold text-content">{{ i18n.t().contact.directTitle }}</h2>
+
+        <ul class="mt-6 flex flex-col gap-3">
+          @for (social of profile.socials; track social.id) {
+            <li>
+              <a
+                [href]="social.url"
+                [attr.target]="social.url.startsWith('http') ? '_blank' : null"
+                [attr.rel]="social.url.startsWith('http') ? 'noopener noreferrer' : null"
+                class="flex items-center gap-3 rounded-card border border-border-subtle bg-surface-raised p-4 text-sm text-content transition-colors duration-200 hover:border-accent-500/50 hover:text-accent-500"
+              >
+                <span
+                  class="grid size-9 shrink-0 place-items-center rounded-lg bg-accent-500/10 text-accent-500"
+                >
+                  <pf-icon [name]="social.icon" [size]="18" />
+                </span>
+                <span class="truncate">{{ social.label }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+
+        <div class="mt-6 rounded-card border border-border-subtle bg-surface-raised p-5">
+          <p class="inline-flex items-center gap-2 text-sm text-content">
+            <pf-icon name="pin" [size]="16" />
+            {{ profile.location }}
+          </p>
+          <p class="mt-3 inline-flex items-center gap-2 text-sm text-content-muted">
+            <pf-icon name="calendar" [size]="16" />
+            {{ i18n.translate(profile.availability) }}
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

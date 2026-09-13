@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Cloud &amp; DevOps">
+  <defs>
+    <linearGradient id="g-cloud" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#2f6bff"/>
+    </linearGradient>
+    <pattern id="p-cloud" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#080b12"/>
+  <rect width="1200" height="675" fill="url(#g-cloud)" opacity="0.85"/>
+  <rect width="1200" height="675" fill="url(#p-cloud)"/>
+  <circle cx="960" cy="150" r="220" fill="#ffffff" opacity="0.08"/>
+  <circle cx="220" cy="560" r="160" fill="#ffffff" opacity="0.06"/>
+  <text x="80" y="360" font-family="ui-monospace, SFMono-Regular, monospace" font-size="56" font-weight="600" fill="#ffffff" opacity="0.95">Cloud &amp; DevOps</text>
+  <text x="80" y="420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" fill="#ffffff" opacity="0.7">Project cover placeholder</text>
+</svg>

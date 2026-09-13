@@ -1,0 +1,160 @@
+<section class="relative overflow-hidden">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="absolute -top-32 -left-24 size-[28rem] rounded-full bg-accent-500/20 blur-3xl"
+      style="animation: var(--animate-blob)"
+    ></div>
+    <div
+      class="absolute -top-20 right-0 size-[24rem] rounded-full bg-highlight/20 blur-3xl"
+      style="animation: var(--animate-blob); animation-delay: -6s"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8 lg:py-24">
+    <p
+      class="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-xs text-content-muted"
+    >
+      <span class="size-1.5 animate-pulse rounded-full bg-emerald-500"></span>
+      {{ i18n.translate(profile.availability) }}
+    </p>
+
+    <h1
+      class="mx-auto mt-6 max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+    >
+      <span class="text-content">{{ i18n.t().home.titleLead }}</span>
+      <span class="bg-gradient-to-r from-accent-500 to-highlight bg-clip-text text-transparent">
+        {{ i18n.t().home.titleHighlight }}
+      </span>
+      <span class="text-content">{{ i18n.t().home.titleTrail }}</span>
+    </h1>
+
+    <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-content-muted">
+      {{ i18n.t().home.subtitle }}
+    </p>
+
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a
+        routerLink="/experience"
+        class="inline-flex items-center gap-2 rounded-lg bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-accent-600"
+      >
+        <pf-icon name="briefcase" [size]="16" />
+        {{ i18n.t().home.primaryCta }}
+      </a>
+
+      <a
+        routerLink="/contact"
+        class="inline-flex items-center gap-2 rounded-lg border border-border-subtle bg-surface-raised px-5 py-2.5 text-sm font-semibold text-content transition-colors duration-200 hover:border-accent-500/50"
+      >
+        {{ i18n.t().home.secondaryCta }}
+      </a>
+
+      <a
+        [href]="profile.resumeUrl"
+        download
+        class="inline-flex items-center gap-2 px-2 py-2.5 text-sm font-medium text-content-muted transition-colors duration-200 hover:text-accent-500"
+      >
+        <pf-icon name="download" [size]="16" />
+        {{ i18n.t().common.downloadResume }}
+      </a>
+    </div>
+
+    <ul class="mt-12 flex flex-wrap justify-center gap-2">
+      @for (skill of coreSkills; track skill) {
+        <li><pf-tech-badge [label]="skill" [highlighted]="true" /></li>
+      }
+    </ul>
+  </div>
+
+  <div class="relative mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8">
+    <pf-section-heading
+      [eyebrow]="i18n.t().home.graphSectionEyebrow"
+      [title]="i18n.t().home.graphSectionTitle"
+      [subtitle]="i18n.t().home.graphSectionSubtitle"
+      [centered]="true"
+    />
+
+    <div class="mt-10" pfReveal>
+      <pf-knowledge-graph />
+    </div>
+  </div>
+</section>
+
+<section class="border-y border-border-subtle bg-surface-raised/40">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 py-12 sm:grid-cols-3 sm:px-6 lg:px-8">
+    @for (stat of stats(); track stat.label) {
+      <div class="flex items-center justify-center gap-4 sm:justify-start">
+        <span
+          class="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-500/10 text-accent-500"
+        >
+          <pf-icon [name]="stat.icon" [size]="20" />
+        </span>
+        <div>
+          <p class="font-mono text-2xl font-bold text-content">{{ stat.value }}</p>
+          <p class="text-sm text-content-muted">{{ stat.label }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+  <pf-section-heading
+    [eyebrow]="i18n.t().nav.experience"
+    [title]="i18n.t().home.latestExperience"
+    [subtitle]="i18n.t().home.latestExperienceSubtitle"
+  />
+
+  @if (currentExperience) {
+    <div class="mt-10" pfReveal>
+      <pf-experience-card [experience]="currentExperience" />
+    </div>
+  }
+
+  <div class="mt-8 flex flex-wrap items-center gap-6">
+    <a
+      routerLink="/experience"
+      class="inline-flex items-center gap-2 text-sm font-semibold text-accent-500 transition-colors duration-200 hover:text-accent-400"
+    >
+      {{ i18n.t().common.viewAll }}
+      <pf-icon name="arrow-right" [size]="16" />
+    </a>
+
+    <ul class="flex items-center gap-2.5" [attr.aria-label]="i18n.t().footer.navTitle">
+      @for (experience of pastCompanies; track experience.id) {
+        <li>
+          <pf-company-logo [logo]="experience.logo" [size]="32" [attr.title]="experience.company" />
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+@defer (on viewport) {
+  <section class="border-t border-border-subtle bg-surface-raised/40">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <pf-section-heading
+        [eyebrow]="i18n.t().nav.projects"
+        [title]="i18n.t().home.featuredProjects"
+        [subtitle]="i18n.t().home.featuredProjectsSubtitle"
+      />
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (project of featuredProjects(); track project.slug; let i = $index) {
+          <div [pfReveal]="i * 80">
+            <pf-project-card [project]="project" />
+          </div>
+        }
+      </div>
+
+      <a
+        routerLink="/projects"
+        class="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-accent-500 transition-colors duration-200 hover:text-accent-400"
+      >
+        {{ i18n.t().common.viewAll }}
+        <pf-icon name="arrow-right" [size]="16" />
+      </a>
+    </div>
+  </section>
+} @placeholder {
+  <div class="h-96"></div>
+}

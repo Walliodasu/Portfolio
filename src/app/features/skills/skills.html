@@ -1,0 +1,75 @@
+<section class="relative overflow-hidden">
+  <pf-page-glow />
+
+  <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <pf-section-heading
+      [eyebrow]="i18n.t().nav.skills"
+      [title]="i18n.t().skills.title"
+      [subtitle]="i18n.t().skills.subtitle"
+    />
+
+    @if (trendingSkills.length) {
+      <div class="mt-10 rounded-card border border-amber-500/30 bg-amber-500/5 p-6" pfReveal>
+        <h2
+          class="flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-400"
+        >
+          <pf-icon name="flame" [size]="18" />
+          {{ i18n.t().skills.trendingTitle }}
+        </h2>
+        <p class="mt-1 text-sm text-content-muted">{{ i18n.t().skills.trendingSubtitle }}</p>
+
+        <ul class="mt-4 flex flex-wrap gap-2">
+          @for (skill of trendingSkills; track skill.name) {
+            <li>
+              <pf-tech-badge
+                [label]="skill.name"
+                [trending]="true"
+                [attr.title]="i18n.t().skills.trendingLabel"
+              />
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      @for (category of categories; track category.id; let i = $index) {
+        <section
+          class="rounded-card border border-border-subtle bg-surface-raised p-6 transition-colors duration-300 hover:border-accent-500/40"
+          [pfReveal]="i * 70"
+        >
+          <h2 class="flex items-center gap-3 text-lg font-semibold text-content">
+            <span
+              class="grid size-10 place-items-center rounded-lg bg-accent-500/10 text-accent-500"
+            >
+              <pf-icon [name]="category.icon" [size]="20" />
+            </span>
+            {{ i18n.translate(category.label) }}
+            <span class="ml-auto font-mono text-xs text-content-faint">{{
+              category.skills.length
+            }}</span>
+          </h2>
+
+          <ul class="mt-5 flex flex-wrap gap-2">
+            @for (skill of category.skills; track skill.name) {
+              <li>
+                <pf-tech-badge
+                  [label]="skill.name"
+                  [highlighted]="skill.featured"
+                  [trending]="!!skill.trending"
+                  [attr.title]="
+                    skill.trending
+                      ? i18n.t().skills.trendingLabel
+                      : skill.featured
+                        ? i18n.t().skills.featuredLabel
+                        : null
+                  "
+                />
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </div>
+  </div>
+</section>
