@@ -29,8 +29,8 @@ export const PROFILE: Profile = {
   phone: '+33 7 45 72 60 58',
   githubUsername: GITHUB_USERNAME,
   availability: {
-    fr: 'Disponible à partir de septembre 2026',
-    en: 'Available from September 2026',
+    fr: 'Disponible dès maintenant',
+    en: 'Available now',
   },
   resumeUrl: '/documents/CV_Wassim_TAGHELIT.pdf',
   socials: [
