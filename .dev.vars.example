@@ -1,0 +1,8 @@
+# Copy this file to `.dev.vars` (gitignored) to test functions/api/contact.ts locally
+# with `npx wrangler pages dev dist/portfolio/browser`.
+# In production, set these as environment variables in the Cloudflare Pages dashboard instead.
+
+EMAILJS_SERVICE_ID=
+EMAILJS_TEMPLATE_ID=
+EMAILJS_PUBLIC_KEY=
+EMAILJS_PRIVATE_KEY=

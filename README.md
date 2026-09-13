@@ -7,7 +7,7 @@ Portfolio personnel développé avec **Angular 20**, rendu côté serveur et pr�
 - **Angular 20** — standalone, zoneless change detection, signals, nouvelle syntaxe de contrôle de flux (`@if` / `@for` / `@defer`)
 - **Angular SSR** (`@angular/ssr`) — prerendering de toutes les routes, y compris les pages de détail projet
 - **Tailwind CSS v4** — configuration CSS-first (`@theme` dans `src/styles.css`), dark mode par classe
-- **EmailJS** — formulaire de contact fonctionnel sans backend
+- **EmailJS** via une **Cloudflare Pages Function** (`functions/api/contact.ts`) — le formulaire de contact appelle `/api/contact`, qui relaie vers EmailJS côté serveur : aucune clé EmailJS n'est jamais expédiée dans le bundle du navigateur
 - **Jasmine + Karma** — tests unitaires
 - **ESLint** (`angular-eslint`) + **Prettier**
 
@@ -45,6 +45,8 @@ src/app/
 ├── layout/       # Header, footer
 ├── shared/       # Composants et directives réutilisables et présentationnels
 └── features/     # Une page = une feature, lazy-loadée (home, about, skills, experience, projects, contact)
+functions/
+└── api/contact.ts  # Cloudflare Pages Function : relaie le formulaire de contact vers EmailJS côté serveur
 ```
 
 Les conventions de développement à respecter sont décrites dans [Claude.md](Claude.md).
@@ -53,7 +55,13 @@ Les conventions de développement à respecter sont décrites dans [Claude.md](C
 
 Avant mise en ligne, renseigner :
 
-1. **EmailJS** — `serviceId`, `templateId` et `publicKey` dans `src/environments/environment.ts` et `environment.development.ts`. Le template EmailJS doit accepter les variables `from_name`, `from_email`, `subject` et `message`.
+1. **EmailJS** — dans le dashboard **Cloudflare Pages** du projet (Settings → Environment variables), définir en variables d'environnement **serveur** (jamais dans le code) :
+   - `EMAILJS_SERVICE_ID`
+   - `EMAILJS_TEMPLATE_ID`
+   - `EMAILJS_PUBLIC_KEY`
+   - `EMAILJS_PRIVATE_KEY` (optionnel — la « Private Key » EmailJS, pour authentifier l'appel serveur à serveur)
+
+   Le template EmailJS doit accepter les variables `from_name`, `from_email`, `subject` et `message`. Pour tester en local, les Functions ne tournent pas avec `ng serve` : utiliser `npx wrangler pages dev dist/portfolio/browser` après un `npm run build`, avec un fichier `.dev.vars` (non committé) contenant ces mêmes variables.
 2. **URL du site** — `siteUrl` dans `src/environments/environment.ts` (utilisé pour les URLs canoniques et les balises Open Graph).
 3. **CV** — déposer le PDF dans `public/documents/CV_Wassim_TAGHELIT.pdf`.
 4. **Projets** — remplacer les fiches placeholder de `src/app/features/projects/data/projects.data.ts` et les visuels de `public/images/projects/`.

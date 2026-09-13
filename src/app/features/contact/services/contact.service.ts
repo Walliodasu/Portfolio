@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
-import emailjs from '@emailjs/browser';
-
-import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 
 export interface ContactMessage {
   readonly name: string;
@@ -10,30 +9,15 @@ export interface ContactMessage {
   readonly message: string;
 }
 
+/**
+ * Sends the contact form through /api/contact, a Cloudflare Pages Function that forwards to
+ * EmailJS server-side — the EmailJS keys never reach the browser bundle.
+ */
 @Injectable({ providedIn: 'root' })
 export class ContactService {
-  private readonly config = environment.emailjs;
-
-  readonly isConfigured =
-    Boolean(this.config.serviceId) &&
-    Boolean(this.config.templateId) &&
-    Boolean(this.config.publicKey);
+  private readonly http = inject(HttpClient);
 
   async send(message: ContactMessage): Promise<void> {
-    if (!this.isConfigured) {
-      throw new Error('EmailJS credentials are missing from the environment configuration.');
-    }
-
-    await emailjs.send(
-      this.config.serviceId,
-      this.config.templateId,
-      {
-        from_name: message.name,
-        from_email: message.email,
-        subject: message.subject,
-        message: message.message,
-      },
-      { publicKey: this.config.publicKey },
-    );
+    await firstValueFrom(this.http.post('/api/contact', message));
   }
 }

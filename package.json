@@ -11,8 +11,8 @@
     "serve:ssr:portfolio": "node dist/portfolio/server/server.mjs",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "format": "prettier --write \"src/**/*.{ts,html,css,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\""
+    "format": "prettier --write \"src/**/*.{ts,html,css,json}\" \"functions/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\" \"functions/**/*.ts\""
   },
   "prettier": {
     "printWidth": 100,
@@ -36,7 +36,6 @@
     "@angular/platform-server": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.37",
-    "@emailjs/browser": "^4.4.1",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
