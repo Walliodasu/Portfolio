@@ -32,7 +32,7 @@ export const PROFILE: Profile = {
     fr: 'Disponible dès maintenant',
     en: 'Available now',
   },
-  resumeUrl: '/documents/CV_Wassim_TAGHELIT.pdf',
+  resumeUrl: '/documents/CV_Wassim_TAGHELIT_CDI_Angular.pdf',
   socials: [
     {
       id: 'github',
