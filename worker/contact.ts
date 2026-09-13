@@ -5,16 +5,18 @@
  * a bot to scrape and replay from another site, which is exactly what the paid "allowed origins"
  * feature would otherwise be protecting against.
  *
- * Configure EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY (and optionally
- * EMAILJS_PRIVATE_KEY, EmailJS's "Private Key" for server-side calls) as Worker variables/secrets
- * in the Cloudflare dashboard (or via `wrangler secret put`) — never commit them to the repo.
+ * Configure EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID and EMAILJS_PUBLIC_KEY as Worker secrets
+ * (`wrangler secret put <NAME>` — dashboard "Variables and secrets" panels have proven unreliable
+ * for this project's Workers Builds setup, so prefer the CLI). EMAILJS_PRIVATE_KEY is also
+ * required here: this EmailJS account has "non-browser API access" enabled, which EmailJS only
+ * allows when a request carries the Private Key ("Account → Security" in the EmailJS dashboard).
  */
 
 export interface ContactEnv {
   readonly EMAILJS_SERVICE_ID: string;
   readonly EMAILJS_TEMPLATE_ID: string;
   readonly EMAILJS_PUBLIC_KEY: string;
-  readonly EMAILJS_PRIVATE_KEY?: string;
+  readonly EMAILJS_PRIVATE_KEY: string;
 }
 
 interface ContactPayload {
@@ -61,19 +63,13 @@ export async function handleContact(request: Request, env: ContactEnv): Promise<
     return Response.json({ error: invalidField }, { status: 400 });
   }
 
-  if (!env.EMAILJS_SERVICE_ID || !env.EMAILJS_TEMPLATE_ID || !env.EMAILJS_PUBLIC_KEY) {
-    // TEMPORARY diagnostic: reports only presence/length of each var, never the value itself.
-    return Response.json(
-      {
-        error: 'server_not_configured',
-        debug: {
-          EMAILJS_SERVICE_ID: env.EMAILJS_SERVICE_ID?.length ?? 'missing',
-          EMAILJS_TEMPLATE_ID: env.EMAILJS_TEMPLATE_ID?.length ?? 'missing',
-          EMAILJS_PUBLIC_KEY: env.EMAILJS_PUBLIC_KEY?.length ?? 'missing',
-        },
-      },
-      { status: 500 },
-    );
+  if (
+    !env.EMAILJS_SERVICE_ID ||
+    !env.EMAILJS_TEMPLATE_ID ||
+    !env.EMAILJS_PUBLIC_KEY ||
+    !env.EMAILJS_PRIVATE_KEY
+  ) {
+    return Response.json({ error: 'server_not_configured' }, { status: 500 });
   }
 
   const emailjsResponse = await fetch(EMAILJS_ENDPOINT, {
