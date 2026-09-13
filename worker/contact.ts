@@ -1,34 +1,27 @@
 /**
- * Cloudflare Pages Function — POST /api/contact
- *
- * Proxies the portfolio's contact form to EmailJS from the server side, so the EmailJS
- * service/template IDs and keys never ship in the browser bundle. This is what makes the
- * integration safe on EmailJS's free tier: there is nothing in client-side JS for a bot to
- * scrape and replay from another site, which is exactly what the paid "allowed origins"
+ * Handles POST /api/contact — relays the portfolio's contact form to EmailJS from the server
+ * side, so the EmailJS service/template IDs and keys never ship in the browser bundle. This is
+ * what makes the integration safe on EmailJS's free tier: there is nothing in client-side JS for
+ * a bot to scrape and replay from another site, which is exactly what the paid "allowed origins"
  * feature would otherwise be protecting against.
  *
  * Configure EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY (and optionally
- * EMAILJS_PRIVATE_KEY, EmailJS's "Private Key" for server-side calls) as environment
- * variables in the Cloudflare Pages project settings — never commit them to the repo.
+ * EMAILJS_PRIVATE_KEY, EmailJS's "Private Key" for server-side calls) as Worker variables/secrets
+ * in the Cloudflare dashboard (or via `wrangler secret put`) — never commit them to the repo.
  */
 
-interface ContactPayload {
-  readonly name: string;
-  readonly email: string;
-  readonly subject: string;
-  readonly message: string;
-}
-
-interface Env {
+export interface ContactEnv {
   readonly EMAILJS_SERVICE_ID: string;
   readonly EMAILJS_TEMPLATE_ID: string;
   readonly EMAILJS_PUBLIC_KEY: string;
   readonly EMAILJS_PRIVATE_KEY?: string;
 }
 
-interface RequestContext {
-  readonly request: Request;
-  readonly env: Env;
+interface ContactPayload {
+  readonly name: string;
+  readonly email: string;
+  readonly subject: string;
+  readonly message: string;
 }
 
 const EMAILJS_ENDPOINT = 'https://api.emailjs.com/api/v1.0/email/send';
@@ -55,9 +48,7 @@ function validationError(payload: Partial<ContactPayload>): string | null {
   return null;
 }
 
-export async function onRequestPost(context: RequestContext): Promise<Response> {
-  const { request, env } = context;
-
+export async function handleContact(request: Request, env: ContactEnv): Promise<Response> {
   let payload: Partial<ContactPayload>;
   try {
     payload = await request.json();

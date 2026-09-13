@@ -7,9 +7,9 @@ const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(
       withRoutes(serverRoutes),
-      // Optionnel selon la structure de votre version pour injecter les options de rendu, 
+      // Optionnel selon la structure de votre version pour injecter les options de rendu,
       // ou en configurant l'objet d'options directement :
-    )
+    ),
   ],
 };
 
