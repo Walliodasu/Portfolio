@@ -62,7 +62,18 @@ export async function handleContact(request: Request, env: ContactEnv): Promise<
   }
 
   if (!env.EMAILJS_SERVICE_ID || !env.EMAILJS_TEMPLATE_ID || !env.EMAILJS_PUBLIC_KEY) {
-    return Response.json({ error: 'server_not_configured' }, { status: 500 });
+    // TEMPORARY diagnostic: reports only presence/length of each var, never the value itself.
+    return Response.json(
+      {
+        error: 'server_not_configured',
+        debug: {
+          EMAILJS_SERVICE_ID: env.EMAILJS_SERVICE_ID?.length ?? 'missing',
+          EMAILJS_TEMPLATE_ID: env.EMAILJS_TEMPLATE_ID?.length ?? 'missing',
+          EMAILJS_PUBLIC_KEY: env.EMAILJS_PUBLIC_KEY?.length ?? 'missing',
+        },
+      },
+      { status: 500 },
+    );
   }
 
   const emailjsResponse = await fetch(EMAILJS_ENDPOINT, {
