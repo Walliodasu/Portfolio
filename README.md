@@ -59,13 +59,18 @@ Les conventions de développement à respecter sont décrites dans [Claude.md](C
 
 Avant mise en ligne, renseigner :
 
-1. **EmailJS** — dans le dashboard Cloudflare, sur le Worker **`portfolio`** (Settings → Variables and Secrets), définir en secrets **serveur** (jamais dans le code) :
-   - `EMAILJS_SERVICE_ID`
-   - `EMAILJS_TEMPLATE_ID`
-   - `EMAILJS_PUBLIC_KEY`
-   - `EMAILJS_PRIVATE_KEY` (optionnel — la « Private Key » EmailJS, pour authentifier l'appel serveur à serveur)
+1. **EmailJS** — 4 secrets sont requis sur le Worker déployé :
+   - `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_PUBLIC_KEY` — identifiants du compte/template EmailJS
+   - `EMAILJS_PRIVATE_KEY` — la « Private Key » EmailJS (Account → Security sur dashboard.emailjs.com). **Obligatoire**, pas optionnelle : ce compte EmailJS a l'option « API access from non-browser applications » activée (Account → Security), qu'EmailJS n'autorise qu'accompagnée de cette clé.
 
-   Équivalent en CLI : `wrangler secret put EMAILJS_SERVICE_ID` (une invite par variable). Le template EmailJS doit accepter les variables `from_name`, `from_email`, `subject` et `message`. Pour tester en local (le Worker ne tourne pas avec `ng serve`), copier `.dev.vars.example` en `.dev.vars` (non committé, déjà dans `.gitignore`), y renseigner ces mêmes valeurs, puis `npm run build && npm run worker:dev`.
+   **Les définir via le CLI, pas le dashboard Cloudflare** : le panneau *Settings → Variables and secrets* du Worker s'est avéré peu fiable pour ce projet (les valeurs saisies là n'atteignaient pas l'`env` runtime du Worker déployé via Workers Builds — cause exacte non élucidée). La méthode fiable et vérifiée :
+   ```bash
+   npx wrangler secret put EMAILJS_SERVICE_ID    # une invite, coller la valeur
+   npx wrangler secret put EMAILJS_TEMPLATE_ID
+   npx wrangler secret put EMAILJS_PUBLIC_KEY
+   npx wrangler secret put EMAILJS_PRIVATE_KEY
+   ```
+   (nécessite `npx wrangler login` au préalable). Le template EmailJS doit accepter les variables `from_name`, `from_email`, `subject` et `message`. Pour tester en local (le Worker ne tourne pas avec `ng serve`), copier `.dev.vars.example` en `.dev.vars` (non committé, déjà dans `.gitignore`), y renseigner ces mêmes valeurs, puis `npm run build && npm run worker:dev`.
 2. **URL du site** — `siteUrl` dans `src/environments/environment.ts` (utilisé pour les URLs canoniques et les balises Open Graph).
 3. **CV** — déposer le PDF dans `public/documents/CV_Wassim_TAGHELIT.pdf`.
 4. **Projets** — remplacer les fiches placeholder de `src/app/features/projects/data/projects.data.ts` et les visuels de `public/images/projects/`.

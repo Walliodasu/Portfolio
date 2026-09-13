@@ -1,8 +1,10 @@
-# Copy this file to `.dev.vars` (gitignored) to test functions/api/contact.ts locally
-# with `npx wrangler pages dev dist/portfolio/browser`.
-# In production, set these as environment variables in the Cloudflare Pages dashboard instead.
+# Copy this file to `.dev.vars` (gitignored) to test worker/contact.ts locally
+# with `npm run build && npm run worker:dev`.
+# In production, set these via `wrangler secret put <NAME>` instead — see README.md.
 
 EMAILJS_SERVICE_ID=
 EMAILJS_TEMPLATE_ID=
 EMAILJS_PUBLIC_KEY=
+# Required: this EmailJS account has "non-browser API access" enabled (Account → Security
+# on dashboard.emailjs.com), which EmailJS only allows when this Private Key is provided.
 EMAILJS_PRIVATE_KEY=
